@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mjsearch.emma.mjsearch.utils.ModelUtils;
 import com.mjsearch.emma.mjsearch.R;
 import com.mjsearch.emma.mjsearch.models.mjThread;
+import com.mjsearch.emma.mjsearch.ThreadDetail.*;
 
 //import com.mjsearch.emma.mjsearch.thread_detail.ThreadActivity;
 //import com.mjsearch.emma.mjsearch.thread_detail.ThreadFragment;
@@ -62,7 +63,7 @@ class ThreadListAdapter extends RecyclerView.Adapter {
             final mjThread thread = data.get(position);
 
             ThreadViewHolder threadViewHolder = (ThreadViewHolder) holder;
-            threadViewHolder.title.setText(String.valueOf(thread.thread_title));
+            threadViewHolder.title.setText((position+1)+String.valueOf(thread.thread_title));
             threadViewHolder.company.setText(String.valueOf(thread.company));
             threadViewHolder.post_date.setText(String.valueOf(thread.post_date));
 
@@ -72,8 +73,8 @@ class ThreadListAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     Context context = holder.itemView.getContext();
                     Intent intent = new Intent(context, ThreadActivity.class);
-                    intent.putExtra(ThreadFragment.KEY_THREAD,
-                                    ModelUtils.toString(thread, new TypeToken<Thread>(){}));
+                    //intent.putExtra(ThreadFragment.KEY_THREAD,
+                    //                ModelUtils.toString(thread, new TypeToken<Thread>(){}));
                     intent.putExtra(ThreadActivity.KEY_THREAD_TITLE, thread.thread_title);
                     context.startActivity(intent);
                 }
@@ -93,8 +94,8 @@ class ThreadListAdapter extends RecyclerView.Adapter {
                 : VIEW_TYPE_LOADING;
     }
 
-    public void append(@NonNull List<Thread> moreShots) {
-        //data.addAll(moreShots);
+    public void append(@NonNull List<mjThread> moreShots) {
+        data.addAll(moreShots);
         notifyDataSetChanged();
     }
 

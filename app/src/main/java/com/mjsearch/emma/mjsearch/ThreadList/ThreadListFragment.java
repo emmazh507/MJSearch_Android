@@ -76,6 +76,7 @@ public class ThreadListFragment extends Fragment {
         protected List<mjThread> doInBackground(Void... params) {
             // this method is executed on non-UI thread
             try {
+                List<mjThread> test = ESClient.post(getActivity(), page);
                 return ESClient.post(getActivity(), page);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
@@ -87,7 +88,7 @@ public class ThreadListFragment extends Fragment {
         protected void onPostExecute(List<mjThread> threads) {
             // this method is executed on UI thread!!!!
             if (threads != null) {
-                //adapter.append(threads);
+                adapter.append(threads);
                 adapter.setShowLoading(threads.size() == ESClient.COUNT_PER_PAGE);
             } else {
                 //Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
@@ -95,7 +96,7 @@ public class ThreadListFragment extends Fragment {
         }
     }
 
-    //Data在fragment中产生
+    //Data在fragment(adapter传递进loading more信号)中产生
 //    private List<Thread> fakeData() {
 //        List<Thread> threadList = new ArrayList<>();
 //        Random random = new Random();

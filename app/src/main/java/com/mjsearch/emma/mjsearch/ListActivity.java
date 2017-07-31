@@ -3,7 +3,7 @@ package com.mjsearch.emma.mjsearch;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-//import com.mjsearch.emma.mjsearch.ThreadList.ThreadListFragment;
+import com.mjsearch.emma.mjsearch.ThreadList.ThreadListFragment;
 
 /**
  * Created by emmazhuang on 7/18/17.
@@ -21,7 +21,7 @@ public class ListActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    //       .add(R.id.fragment_container, ThreadListFragment.newInstance())
+                    .add(R.id.fragment_container, ThreadListFragment.newInstance())
                     .commit();
         }
     }

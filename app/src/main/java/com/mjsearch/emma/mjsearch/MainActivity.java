@@ -21,6 +21,7 @@ import android.util.Log;
 import com.google.gson.JsonSyntaxException;
 import com.mjsearch.emma.mjsearch.es.*;
 
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity  {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity  {
         {"index" : "onem3point"}
         {"query" : {"match_phrase": {"title": "hard"}}, "from" : 0, "size" : 10}
         * */
-        new Thread(new Runnable() {
+    /*    new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity  {
                     e.printStackTrace();
                 }
             }
-        }).start();
-/*
+        }).start();*/
+
         TextView search_button_ori = (TextView) findViewById(R.id.search_button);
         search_button_ori.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -69,9 +70,19 @@ public class MainActivity extends AppCompatActivity  {
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 //intent.putExtra(ListActivity.KEY_KEYWORD, ((EditText) findViewById(R.id.keyword)).getText().toString());
                 startActivity(intent);
+                /*new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ESClient.post(getApplicationContext(), 0);
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();*/
                 finish();
             }
-        });*/
+        });
 
     }
 

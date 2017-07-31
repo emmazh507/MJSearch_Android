@@ -14,6 +14,10 @@ import com.mjsearch.emma.mjsearch.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+
+
+
 @SuppressWarnings("ConstantConditions")
 public abstract class SingleFragmentActivity extends AppCompatActivity {
 

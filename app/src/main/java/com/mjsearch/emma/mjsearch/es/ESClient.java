@@ -21,20 +21,20 @@ import com.mjsearch.emma.mjsearch.models.mjThread;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.;
 
 import java.util.List;
 import java.util.ArrayList;
 
+
 public class ESClient {
     // mjsearch loads everything in a 12-per-page manner
-    public static final int COUNT_PER_PAGE = 12;
+    public static final int COUNT_PER_PAGE = 2;
     private static final String SP_KEY = "keyword";
     private static final String TAG = "ES_API";
     private static final String BASE_URL = "http://10.0.2.2:9200/";
     private static final String CLASS_NAME = ESClient.class.getSimpleName();
-    private static final TypeToken<List<mjThread>> THREAD_LIST_TYPE = new TypeToken<List<mjThread>>() {
-    };
+   // private static final TypeToken<List<mjThread>> THREAD_LIST_TYPE = new TypeToken<List<mjThread>>() {
+  //  };
 
     public static List<mjThread> post(@NonNull Context context, int page) {
         Log.d("checkpoint1", "HERE-->post");
@@ -48,8 +48,9 @@ public class ESClient {
     private static List<mjThread> searchPost(METHOD httpMethod, String ES_INDEX, String ES_TYPE, String apiString, String url) {
         Log.d("checkpoint1", "HERE-->postOrPut");
         String responseBody = null;
-        try {
+        ArrayList<mjThread> result = new ArrayList<mjThread>();
 
+        try {
             OkHttpClient httpClient = new OkHttpClient();
             //RequestBody body = RequestBody.create(JSON, params);
             //String url="http://10.0.2.2:9200/_search?source={\"query\" : {\"match_phrase\" : {\"title\": \"hard\"} }, \"from\" : 0, \"size\" : 10}";
@@ -61,43 +62,53 @@ public class ESClient {
 
             Log.d("checkpoint1", "HERE-->" + "start response");
             Response response = httpClient.newCall(request).execute();
-            //result
+            //result(java JSONArray)
             responseBody = response.body().string();
             Log.d("checkpoint1", responseBody);
-
-            org.json.JSONObject obj = new org.json.JSONObject(responseBody);
+            JSONObject obj = new org.json.JSONObject(responseBody);
             Boolean test1 = obj.optBoolean("timed_out"); // false
             JSONArray items = obj.optJSONObject("hits").optJSONArray("hits");
-
-            for(JSONObject item : items) {
-
+            for(int i=0;i<items.length();i++) {
+                mjThread cur = new mjThread();
+                JSONObject item = items.getJSONObject(i);
+                JSONObject source = item.getJSONObject("_source");
+                if(item.getString("_index").equals("glassdoor")) {
+                    cur.company=source.getString("company")+" : "+source.getString("position");
+                    cur.thread_title=source.getString("content");
+                    cur.post_date=source.getString("post_date");
+                    cur.article=source.getString("content")+"\n"+source.getString("answer");
+                }
+                else if(item.getString("_index").equals("onem3point")) {
+                    cur.company=source.getString("tags");
+                    cur.thread_title=source.getString("title");
+                    cur.post_date=source.getString("post_date");
+                    cur.article=source.getString("content");
+                }
+                result.add(cur);
             }
 
-            return new ArrayList<mjThread>() {
-            };
+          //  return new ArrayList<mjThread>() {
+           // };
 
         } catch (Exception e) {
             Log.e(CLASS_NAME, e.getLocalizedMessage());
             responseBody = e.getLocalizedMessage();
         } finally {
-            return new ArrayList<mjThread>();
+            return result;
         }
     }
 
     private static String getAbsoluteUrl(@NonNull Context context, int page) {
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences(
                 SP_KEY, Context.MODE_PRIVATE);
-        sp.edit().putString("keyword", "OA").apply();
+        //sp.edit().putString("keyword", "OA").apply();
 
         String keyword = loadKeyword(context, "keyword");
         if (keyword == "")
             keyword = "interview";
         //concatenation + --> will use stringbuilder automatically
-        //String relativeUrl = "_search?source={\"query\" : {\"match_phrase\" : {\"title\": \"" + keyword +"\"} }, \"from\" :" + page*COUNT_PER_PAGE + "\"size\" : " + (page+1)*COUNT_PER_PAGE +"}";
         String relativeUrl = "_search?source={\"query\":{\"multi_match\":{\"query\":\"" + keyword + "\",\"fields\":[\"tags\", \"title\", \"content\", \"company\", \"answer\"]}}," +
                 "\"from\":" + page * COUNT_PER_PAGE + ",\"size\":" + COUNT_PER_PAGE + "}";
-                //"\"highlight\":{\"pre_tags\": [\"<span class=\'keyword\'>\"],\"post_tags\": [\"</span>\"],\"fields\":{\"title\":{},\"content\":{},\"company\":{},\"answer\":{}}}}";
-        //return "http://localhost:9200/onem3point/mj/_msearch";
         return BASE_URL + relativeUrl;
     }
 
@@ -106,11 +117,13 @@ public class ESClient {
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences(
                 SP_KEY, Context.MODE_PRIVATE);
         sp.edit().putString("keyword", token).apply();
+        //String saved = sp.getString("keyword", "");
     }
 
     private static String loadKeyword(Context context, String key) {
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences(
                 SP_KEY, Context.MODE_PRIVATE);
+        //String saved2 = sp.getString("keyword","");
         try {
             return sp.getString(key, "");
         } catch (JsonSyntaxException e) {
