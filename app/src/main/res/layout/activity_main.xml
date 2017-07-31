@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <FrameLayout
+        android:id="@+id/basic_info_edit_image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_weight="0.11">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/start_page_background"/>
+
+        <ImageView
+            android:id="@+id/logo_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/logo_pic"
+            android:contentDescription="logo picture"/>
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/keyword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="@string/keyword"
+        android:padding="@dimen/spacing_small"/>
+
+
+    <TextView
+        android:id="@+id/search_button"
+        style="@style/AppTheme.TextView.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/action_search"
+        android:layout_weight="0.00" />
+
+
+</LinearLayout>
