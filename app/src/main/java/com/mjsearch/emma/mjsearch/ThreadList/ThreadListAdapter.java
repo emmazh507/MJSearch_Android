@@ -21,7 +21,7 @@ import com.mjsearch.emma.mjsearch.R;
 import com.mjsearch.emma.mjsearch.models.mjThread;
 import com.mjsearch.emma.mjsearch.ThreadDetail.*;
 
-//import com.mjsearch.emma.mjsearch.thread_detail.ThreadActivity;
+///mport com.mjsearch.emma.mjsearch.thread_detail.ThreadActivity;
 //import com.mjsearch.emma.mjsearch.thread_detail.ThreadFragment;
 
 import java.util.List;
@@ -67,18 +67,18 @@ class ThreadListAdapter extends RecyclerView.Adapter {
             threadViewHolder.company.setText(String.valueOf(thread.company));
             threadViewHolder.post_date.setText(String.valueOf(thread.post_date));
 
-/*
+
             threadViewHolder.cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = holder.itemView.getContext();
                     Intent intent = new Intent(context, ThreadActivity.class);
-                    //intent.putExtra(ThreadFragment.KEY_THREAD,
-                    //                ModelUtils.toString(thread, new TypeToken<Thread>(){}));
+                    intent.putExtra(ThreadFragment.KEY_THREAD,
+                            ModelUtils.toString(thread, new TypeToken<mjThread>(){}));
                     intent.putExtra(ThreadActivity.KEY_THREAD_TITLE, thread.thread_title);
                     context.startActivity(intent);
                 }
-            });*/
+            });
         }
     }
 

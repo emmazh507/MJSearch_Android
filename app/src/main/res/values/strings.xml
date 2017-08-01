@@ -4,4 +4,7 @@
     <string name="keyword">keyword</string>
     <string name="action_search">Search</string>
     <string name="share">share</string>
+    <string name="share_thread">Check this useful mjThread!</string>
+
+
 </resources>

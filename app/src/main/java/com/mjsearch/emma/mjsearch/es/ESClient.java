@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class ESClient {
     // mjsearch loads everything in a 12-per-page manner
-    public static final int COUNT_PER_PAGE = 2;
+    public static final int COUNT_PER_PAGE = 12;
     private static final String SP_KEY = "keyword";
     private static final String TAG = "ES_API";
     private static final String BASE_URL = "http://10.0.2.2:9200/";
@@ -77,12 +77,14 @@ public class ESClient {
                     cur.thread_title=source.getString("content");
                     cur.post_date=source.getString("post_date");
                     cur.article=source.getString("content")+"\n"+source.getString("answer");
+                    cur.html_url=source.getString("url");
                 }
                 else if(item.getString("_index").equals("onem3point")) {
                     cur.company=source.getString("tags");
                     cur.thread_title=source.getString("title");
                     cur.post_date=source.getString("post_date");
                     cur.article=source.getString("content");
+                    cur.html_url=source.getString("url");
                 }
                 result.add(cur);
             }

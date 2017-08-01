@@ -11,4 +11,5 @@ public class mjThread {
     public String company;
     public String post_date;
     public String article;
+    public String html_url;
 }

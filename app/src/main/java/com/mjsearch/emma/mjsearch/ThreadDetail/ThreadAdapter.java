@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.text.method.ScrollingMovementMethod;
 
 import com.mjsearch.emma.mjsearch.R;
 import com.mjsearch.emma.mjsearch.models.mjThread;
@@ -15,8 +16,8 @@ import com.mjsearch.emma.mjsearch.models.mjThread;
 // ShotAdapter is used to display a Shot object as items in RecyclerView
 class ThreadAdapter extends RecyclerView.Adapter {
 
-    private static final int VIEW_TYPE_SHOT_IMAGE = 0;
-    private static final int VIEW_TYPE_SHOT_INFO = 1;
+    private static final int VIEW_TYPE_THREAD_IMAGE = 0;
+    private static final int VIEW_TYPE_THREAD_INFO = 1;
 
     private final mjThread thread;
 
@@ -27,73 +28,74 @@ class ThreadAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        switch (viewType) {
-            //case VIEW_TYPE_SHOT_IMAGE:
+        //switch (viewType) {
+            //case VIEW_TYPE_THREAD_IMAGE:
             //    view = LayoutInflater.from(parent.getContext())
-            //                         .inflate(R.layout.shot_item_image, parent, false);
+            //                         .inflate(R.layout.thread_item_image, parent, false);
             //    return new ImageViewHolder(view);
-            case VIEW_TYPE_SHOT_INFO:
+            //case VIEW_TYPE_THREAD_INFO:
                 view = LayoutInflater.from(parent.getContext())
                                      .inflate(R.layout.thread_item_info, parent, false);
-            //    return new InfoViewHolder(view);
-            default:
-                return null;
-        }
+                return new InfoViewHolder(view);
+            //default:
+                //return null;
+        //}
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final int viewType = getItemViewType(position);
-/*        switch (viewType) {
-            case VIEW_TYPE_SHOT_IMAGE:
+        final int viewType = VIEW_TYPE_THREAD_INFO;
+
+        //final int viewType = getItemViewType(position);
+        //  switch (viewType) {
+         /*   case VIEW_TYPE_THREAD_IMAGE:
                 // play gif automatically
                 DraweeController controller = Fresco.newDraweeControllerBuilder()
                                                     .setUri(Uri.parse(shot.getImageUrl()))
                                                     .setAutoPlayAnimations(true)
                                                     .build();
                 ((ImageViewHolder) holder).image.setController(controller);
-                break;
-            case VIEW_TYPE_SHOT_INFO:
-                InfoViewHolder shotDetailViewHolder = (InfoViewHolder) holder;
-                shotDetailViewHolder.title.setText(shot.title);
-                shotDetailViewHolder.authorName.setText(shot.user.name);
-                shotDetailViewHolder.description.setText(shot.description);
-                shotDetailViewHolder.authorPicture.setImageURI(Uri.parse(shot.user.avatar_url));
+                break;*/
+            //case VIEW_TYPE_THREAD_INFO:
+                InfoViewHolder threadDetailViewHolder = (InfoViewHolder) holder;
+                threadDetailViewHolder.title.setText(thread.thread_title);
+                threadDetailViewHolder.company.setText(thread.company);
+                threadDetailViewHolder.post_date.setText(thread.post_date);
+                threadDetailViewHolder.content.setText(thread.article);
+                //threadDetailViewHolder.content.setMovementMethod(new ScrollingMovementMethod());
 
-                shotDetailViewHolder.likeCount.setText(String.valueOf(shot.likes_count));
-                shotDetailViewHolder.bucketCount.setText(String.valueOf(shot.buckets_count));
-                shotDetailViewHolder.viewCount.setText(String.valueOf(shot.views_count));
 
-                shotDetailViewHolder.shareButton.setOnClickListener(new View.OnClickListener() {
+        threadDetailViewHolder.shareButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         share(v.getContext());
                     }
                 });
-                break;
-        }*/
+               // break;
+        //}
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        //return 2;
+        return 1;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return VIEW_TYPE_SHOT_IMAGE;
+            return VIEW_TYPE_THREAD_IMAGE;
         } else {
-            return VIEW_TYPE_SHOT_INFO;
+            return VIEW_TYPE_THREAD_INFO;
         }
     }
-/*
+
     private void share(Context context) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, thread.title + " " + thread.html_url);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, thread.thread_title + " " + thread.html_url);
         shareIntent.setType("text/plain");
         context.startActivity(Intent.createChooser(shareIntent,
-                                                   context.getString(R.string.share_shot)));
-    }*/
+                                                   context.getString(R.string.share_thread)));
+    }
 }

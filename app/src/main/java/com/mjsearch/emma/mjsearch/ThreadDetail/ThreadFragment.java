@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 
 public class ThreadFragment extends Fragment {
 
-    public static final String KEY_SHOT = "thread";
+    public static final String KEY_THREAD = "mjThread";
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
 
@@ -37,12 +37,13 @@ public class ThreadFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         ButterKnife.bind(this, view);
+        view.setNestedScrollingEnabled(false);
         return view;
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
-        mjThread thread = ModelUtils.toObject(getArguments().getString(KEY_SHOT),
+        mjThread thread = ModelUtils.toObject(getArguments().getString(KEY_THREAD),
                                         new TypeToken<mjThread>(){});
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new ThreadAdapter(thread));

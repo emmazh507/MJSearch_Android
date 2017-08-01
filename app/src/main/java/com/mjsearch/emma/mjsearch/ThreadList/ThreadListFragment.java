@@ -40,6 +40,7 @@ public class ThreadListFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+
         ButterKnife.bind(this, view);
         return view;
     }
