@@ -31,7 +31,7 @@ public class ESClient {
     public static final int COUNT_PER_PAGE = 12;
     private static final String SP_KEY = "keyword";
     private static final String TAG = "ES_API";
-    private static final String BASE_URL = "http://10.0.2.2:9200/";
+    private static final String BASE_URL = "http://73.170.153.62//";
     private static final String CLASS_NAME = ESClient.class.getSimpleName();
    // private static final TypeToken<List<mjThread>> THREAD_LIST_TYPE = new TypeToken<List<mjThread>>() {
   //  };
@@ -68,6 +68,7 @@ public class ESClient {
             JSONObject obj = new org.json.JSONObject(responseBody);
             Boolean test1 = obj.optBoolean("timed_out"); // false
             JSONArray items = obj.optJSONObject("hits").optJSONArray("hits");
+
             for(int i=0;i<items.length();i++) {
                 mjThread cur = new mjThread();
                 JSONObject item = items.getJSONObject(i);
@@ -88,7 +89,6 @@ public class ESClient {
                 }
                 result.add(cur);
             }
-
           //  return new ArrayList<mjThread>() {
            // };
 
@@ -96,7 +96,7 @@ public class ESClient {
             Log.e(CLASS_NAME, e.getLocalizedMessage());
             responseBody = e.getLocalizedMessage();
         } finally {
-            return result;
+                return result;
         }
     }
 

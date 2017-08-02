@@ -39,7 +39,9 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout_ID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_xsmall"
+        android:background="@color/start_page_background">
 
 
         <TextView
@@ -47,8 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/AppTheme.TextView.2"
-            tools:text="Thread title"
-            android:background="@color/start_page_background"/>
+            tools:text="Thread title" />
 
         <TextView
             android:id="@+id/thread_detail_post_date"
@@ -56,17 +57,17 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/thread_detail_title"
             android:layout_below="@id/thread_detail_title"
-            tools:text="Thread post_date"
-            android:background="@color/start_page_background"/>
+            tools:text="Thread post_date" />
 
     </RelativeLayout>
 
     <ScrollView
         android:layout_below="@+id/thread_detail_post_date"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:scrollbars="vertical"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:padding="@dimen/spacing_xsmall">
 
         <TextView
             android:id="@+id/thread_detail_content"

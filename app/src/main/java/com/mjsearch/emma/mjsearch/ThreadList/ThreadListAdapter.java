@@ -63,7 +63,10 @@ class ThreadListAdapter extends RecyclerView.Adapter {
             final mjThread thread = data.get(position);
 
             ThreadViewHolder threadViewHolder = (ThreadViewHolder) holder;
-            threadViewHolder.title.setText((position+1)+String.valueOf(thread.thread_title));
+            String list_title = (position+1)+"-"+String.valueOf(thread.thread_title);
+            if(list_title.length()>80)
+                list_title = list_title.substring(0, 80)+"...";
+            threadViewHolder.title.setText(list_title);
             threadViewHolder.company.setText(String.valueOf(thread.company));
             threadViewHolder.post_date.setText(String.valueOf(thread.post_date));
 

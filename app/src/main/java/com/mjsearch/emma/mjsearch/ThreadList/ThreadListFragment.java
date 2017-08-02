@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+
 
 import com.google.gson.JsonSyntaxException;
 import com.mjsearch.emma.mjsearch.R;
@@ -88,11 +93,25 @@ public class ThreadListFragment extends Fragment {
         @Override
         protected void onPostExecute(List<mjThread> threads) {
             // this method is executed on UI thread!!!!
+
             if (threads != null) {
-                adapter.append(threads);
-                adapter.setShowLoading(threads.size() == ESClient.COUNT_PER_PAGE);
-            } else {
-                //Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
+                if(threads.size()==0) {
+                    //Snackbar.make(getView(), "Error!", Snackbar.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("No result found!")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //do things
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else {
+                    adapter.append(threads);
+                    adapter.setShowLoading(threads.size() == ESClient.COUNT_PER_PAGE);
+                }
             }
         }
     }

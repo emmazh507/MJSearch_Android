@@ -33,4 +33,6 @@
 
     <dimen name="activity_auth_progress_bar_height">2dp</dimen>
 
+    <dimen name="bar_height">30dp</dimen>
+
 </resources>
